@@ -23,7 +23,7 @@
 
         <div class="uploadResult">
             <ul>
-                <li th:each="movieImage: ${dto.imageDTOList}">
+                <li th:each="movieImage: ${dto.imageDTOList}" th:data-file="${movieImage.getThumbnailURL()}">
                     <img th:if="${movieImage.path != null}" th:src="|/display?fileName=${movieImage.getThumbnailURL()}|">
                 </li>
             </ul>
@@ -252,6 +252,16 @@
                         }
                     }); // end ajax
                     reviewModal.modal('hide');
+                });
+
+                // data-file 속성값을 가져와 모달창 이미지 태그로 추가한다.
+                // size 파라미터 값을 이용해 원본 이미지를 가져온다.
+                $(".uploadResult li").click(function(){
+                    var file = $(this).data('file');
+                    console.log(file);
+
+                    $('.imageModal .modal-body').html("<img style='width:100%' src='/display?fileName=" + file + "&size=1' >");
+                    $(".imageModal").modal('show');
                 });
             });
         </script>
