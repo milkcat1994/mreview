@@ -191,7 +191,6 @@
 
                 // 특정 리뷰 선택
                 var reviewnum;
-
                 $(".reviewList").on("click", ".card-body", function(){
                     $(".reviewSaveBtn").hide();
                     $(".removeBtn, .modifyBtn").show();
@@ -207,6 +206,52 @@
                     $(".starrr a:nth-child("+grade+")").trigger('click');
 
                     $('.reviewModal').modal('show');
+                });
+
+                // 리뷰 수정
+                $(".modifyBtn").on("click", function(){
+                    var data = {
+                        reviewnum: reviewnum,
+                        mno: mno,
+                        grade: grade,
+                        text: inputText.val(),
+                        mid: inputMid.val()
+                    };
+                    console.log(data);
+
+                    $.ajax({
+                        url: '/reviews/' + mno + "/" + reviewnum,
+                        data: JSON.stringify(data),
+                        type: 'PUT',
+                        contentType:"application/json; charset=utf-8",
+                        dataType: 'text',
+                        success: function(result){
+                            console.log("result: "+ result);
+                            self.location.reload();
+                        }
+                    }); // end ajax
+                    reviewModal.modal('hide');
+                });
+
+                // 리뷰 삭제
+                $(".removeBtn").on("click", function(){
+                    var data = {
+                        reviewnum: reviewnum
+                    };
+                    console.log(data);
+
+                    $.ajax({
+                        url: '/reviews/' + mno + "/" + reviewnum,
+                        data: JSON.stringify(data),
+                        type: 'DELETE',
+                        contentType:"application/json; charset=utf-8",
+                        dataType: 'text',
+                        success: function(result){
+                            console.log("result: "+ result);
+                            self.location.reload();
+                        }
+                    }); // end ajax
+                    reviewModal.modal('hide');
                 });
             });
         </script>
