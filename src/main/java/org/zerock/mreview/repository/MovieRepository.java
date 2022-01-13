@@ -8,10 +8,18 @@ import org.zerock.mreview.entity.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    // 아래 쿼리는 max()의 사용으로 인해 N+1 문제가 발생한다.
-    @Query("select m, max(mi), avg(coalesce(r.grade,0)), count(distinct r) " +
+    // max() 사용대신 mi를 출력하여 가장 낮은 번호를 자동으로 연결할 수 있다.
+    @Query("select m, mi, avg(coalesce(r.grade,0)), count(distinct r) " +
             "from Movie m " +
             "left outer join MovieImage mi on mi.movie = m " +
             "left outer join Review r on r.movie = m group by m")
     Page<Object[]> getListPage(Pageable pageable);
+    // 가장 나중에 추가된 이미지의 경우 아래와 같은 쿼리를 적용할 수 있다.
+    /*
+    select m, i, count(r)
+    from Movie m
+    left join MovieImage i on i.movie = m
+    and i.inum = (select max(i2.inum) from MovieImage i2 where i2.movie = m)
+    left outer join Review r on r.movie = m group by m
+     */
 }
