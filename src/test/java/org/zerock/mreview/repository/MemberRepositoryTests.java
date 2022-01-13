@@ -13,6 +13,9 @@ public class MemberRepositoryTests {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Test
     public void insertMembers(){
 
@@ -27,4 +30,16 @@ public class MemberRepositoryTests {
         });
     }
 
+    // FK로 참조하고 있는 상태이기에 PK쪽을 먼저 삭제할 수 없다.
+    @Test
+    public void testDeleteMember(){
+        Long mid = 1L;
+
+        Member member = Member.builder()
+                .mid(mid)
+                .build();
+
+        memberRepository.deleteById(mid);
+        reviewRepository.deleteByMember(member);
+    }
 }
