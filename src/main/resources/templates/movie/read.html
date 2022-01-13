@@ -124,6 +124,7 @@
                 var inputMid = $('input[name="mid"]');
                 var inputText = $('input[name="text"]');
 
+                // 리뷰 모달창 띄우기
                 $(".addReviewBtn").click(function(){
                     inputMid.val("");
                     inputText.val("");
@@ -134,6 +135,7 @@
                     reviewModal.modal('show');
                 });
 
+                // 리뷰 저장
                 $(".reviewSaveBtn").click(function(){
                     var data = {
                         mno: mno,
@@ -158,6 +160,7 @@
                     reviewModal.modal('hide');
                 });
 
+                // 전체 리뷰 목록 가져오기
                 function getMovieReviews(){
                     function formatTime(str){
                         var date = new Date(str);
@@ -185,6 +188,26 @@
                         $('.reviewList').html(str);
                     });
                 }
+
+                // 특정 리뷰 선택
+                var reviewnum;
+
+                $(".reviewList").on("click", ".card-body", function(){
+                    $(".reviewSaveBtn").hide();
+                    $(".removeBtn, .modifyBtn").show();
+
+                    var targetReview = $(this);
+
+                    reviewnum = targetReview.data("reviewnum");
+                    console.log("reviewnum:"+ reviewnum);
+                    inputMid.val(targetReview.data("mid"));
+                    inputText.val(targetReview.find('.card-title').clone().children().remove().end().text());
+
+                    var grade = targetReview.find('.card-title span').html();
+                    $(".starrr a:nth-child("+grade+")").trigger('click');
+
+                    $('.reviewModal').modal('show');
+                });
             });
         </script>
     </th:block>
