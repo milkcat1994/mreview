@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.mreview.entity.Movie;
 import org.zerock.mreview.entity.MovieImage;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -21,8 +21,8 @@ public class MovieRepositoryTests {
     private MovieImageRepository movieImageRepository;
 
     @Commit
-    @Transactional
     @Test
+    @Transactional
     public void insertMovies(){
 
         IntStream.rangeClosed(1,100).forEach(i -> {

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @ToString(exclude = "movie")
-public class MovieImage extends BaseEntity{
+public class MovieImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
