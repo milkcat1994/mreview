@@ -1,6 +1,7 @@
 package org.zerock.mreview.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.zerock.mreview.dto.MovieDTO;
 import org.zerock.mreview.dto.MovieImageDTO;
@@ -17,6 +18,9 @@ public interface MovieMapper {
 
     Movie getMovieEntityFromDto(MovieDTO dto);
 
+    @Mapping(target="imageDTOList", ignore = true)
+    @Mapping(target="reviewCnt", ignore = true)
+    @Mapping(target="avg", ignore = true)
     MovieDTO getMovieDtoFromEntity(Movie movie);
 
     default List<MovieImage> getMovieImageEntityFromDto(List<MovieImageDTO> movieImageDTOList, Movie movie){

@@ -57,7 +57,7 @@ public class MovieServiceImpl implements MovieService{
 
         Function<Object[], MovieDTO> fn = (arr -> mapper.entitiesToDTO(
                 (Movie) arr[0],
-                (List<MovieImage>) (Arrays.asList((MovieImage)arr[1])),
+                (List<MovieImage>) (List.of((MovieImage) arr[1])),
                 (Double) arr[2],
                 (Long) arr[3]
         ));
