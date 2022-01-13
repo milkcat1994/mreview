@@ -48,10 +48,33 @@
         console.log(arr);
 
         var divArea = $(".uploadResult");
+
+        var str = "";
+
+        // 각 업로드 파일에 대해서 삭제 가능하도록 html 수정
         for(var i=0; i<arr.length; ++i){
-            divArea.append("<img src='/display?fileName=" + arr[i].thumbnailURL + "'>'");
+            str += "<div>";
+            str += "<img src='/display?fileName=" + arr[i].thumbnailURL + "'>";
+            str += "<button class='removeBtn' data-name='" + arr[i].imageURL + "'>REMOVE</button>";
+            str += "</div>"
         }
+        divArea.append(str);
     }
+
+    $(".uploadResult").on("click", ".removeBtn", function(e){
+        var target = $(this);
+        var fileName = target.data("name");
+        var targetDiv = $(this).closest("div");
+
+        console.log(fileName);
+
+        $.post('/removeFile', {fileName: fileName}, function(result){
+            console.log(result);
+            if(result === true){
+                targetDiv.remove();
+            }
+        });
+    });
   </script>
 </body>
 </html>
