@@ -28,6 +28,6 @@ public class MovieController {
         log.info("movieDTO: " + movieDTO);
         Long mno = movieService.register(movieDTO);
         redirectAttributes.addFlashAttribute("msg", mno);
-        return "redrect:/movie/list";
+        return "redirect:/movie/list";
     }
 }
