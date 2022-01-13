@@ -12,7 +12,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     // 페이지 처리
     // max() 사용대신 mi를 출력하여 가장 낮은 번호를 자동으로 연결할 수 있다.
-    @Query("select m, mi, avg(coalesce(r.grade,0)), count(distinct r) " +
+    @Query("select m, mi, avg(coalesce(r.grade,0)), count(r) " +
             "from Movie m " +
             "left outer join MovieImage mi on mi.movie = m " +
             "left outer join Review r on r.movie = m group by m")

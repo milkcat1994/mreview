@@ -91,7 +91,7 @@ public class UploadController {
     // /display?fileName=xxxx URL로 호출시에 이미지가 전송 되도록 메서드를 추가한다.
     // URL 인코딩된 파일 이름을 파라미터로 받아 해당 파일을 byte[]로 만들어서 브라우저로 전송
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName){
+    public ResponseEntity<byte[]> getFile(String fileName, String size){
         ResponseEntity<byte[]> result = null;
 
         try{
@@ -99,6 +99,10 @@ public class UploadController {
             log.info("fileName: "+ srcFileName);
 
             File file = new File(uploadPath + File.separator + srcFileName);
+            // size 파라미터가 1이라면 원본을 전송한다. <- 섬네일 눌렀을 경우 처리 위한 구분
+            if(size != null && size.equals("1")){
+                file = new File(file.getParent(), file.getName().substring(2));
+            }
             log.info("file: "+ file);
 
             HttpHeaders header = new HttpHeaders();

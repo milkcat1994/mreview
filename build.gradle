@@ -33,6 +33,9 @@ dependencies {
 	implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'
 
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.12'
+
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 }
 
 test {
