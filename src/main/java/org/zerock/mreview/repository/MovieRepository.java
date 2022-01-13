@@ -8,8 +8,10 @@ import org.zerock.mreview.entity.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    @Query("select m, avg(coalesce(r.grade,0)), count(distinct r) " +
-            "from Movie m left outer join Review r " +
-            "on r.movie = m group by m")
+    // 아래 쿼리는 max()의 사용으로 인해 N+1 문제가 발생한다.
+    @Query("select m, max(mi), avg(coalesce(r.grade,0)), count(distinct r) " +
+            "from Movie m " +
+            "left outer join MovieImage mi on mi.movie = m " +
+            "left outer join Review r on r.movie = m group by m")
     Page<Object[]> getListPage(Pageable pageable);
 }
