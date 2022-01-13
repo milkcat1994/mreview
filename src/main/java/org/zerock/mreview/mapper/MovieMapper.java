@@ -23,6 +23,8 @@ public interface MovieMapper {
     @Mapping(target="avg", ignore = true)
     MovieDTO getMovieDtoFromEntity(Movie movie);
 
+    List<MovieImageDTO> getMovieImageDtoFromEntity(List<MovieImage> movieImageList);
+
     default List<MovieImage> getMovieImageEntityFromDto(List<MovieImageDTO> movieImageDTOList, Movie movie){
         return movieImageDTOList.stream().map(movieImageDTO ->
                 MovieImage.builder()
@@ -47,33 +49,6 @@ public interface MovieMapper {
 
         return movieDTO;
     }
-
-//    default MovieDTO getMovieDtoFromEntity(List<MovieImage> movieImageList, Movie movie){
-//        MovieDTO movieDTO = MovieDTO.builder()
-//                .mno(movie.getMno())
-//
-//        List<MovieImageDTO> movieImageDTOList = movieImageList.stream().map(movieImage ->
-//                MovieImageDTO.builder()
-//                        .imgName(movieImage.getImgName())
-//                        .path(movieImage.getPath())
-//                        .uuid(movieImage.getUuid())
-//                        .build()
-//        ).collect(Collectors.toList());
-//
-//
-//    }
-
-    List<MovieImageDTO> getMovieImageDtoFromEntity(List<MovieImage> movieImageList);
-//    default List<MovieImage> getMovieImageDtoFromEntity(List<MovieImage> movieImageDTOList){
-//        return movieImageDTOList.stream().map(movieImageDTO ->
-//                MovieImage.builder()
-//                        .path(movieImageDTO.getPath())
-//                        .imgName(movieImageDTO.getImgName())
-//                        .uuid(movieImageDTO.getUuid())
-//                        .movie(movie)
-//                        .build()
-//        ).collect(Collectors.toList());
-//    }
 
     default Map<String, Object> dtoToEntity(MovieDTO dto){
         Map<String, Object> entityMap = new HashMap<>();
